@@ -11,7 +11,19 @@ public class Teletransporte : MonoBehaviour {
 		}
 	}
 
+	void OnDrawGizmosSelected() {
+		if (destino != null) { // != No es igual a null / ! es negar
+			Gizmos.color = Color.red;
+			Gizmos.DrawLine (transform.position, destino.position);
+		}
+	}
 
+	void OnDrawGizmos() {
+		if (destino != null) {
+			Gizmos.color = Color.grey;
+			Gizmos.DrawLine (transform.position, destino.position);
+		}
+	}
 	// Use this for initialization
 	void Start () {
 	
