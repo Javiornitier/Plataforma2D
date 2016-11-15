@@ -84,8 +84,6 @@ public class Player1_Controles : MonoBehaviour {
 	}
 	void OnCollisionEnter2D(Collision2D col){
 		if (col.gameObject.tag == "Muerte") {
-			gcs.esta_vivo = false;
-			Destroy(gameObject);
 			gcs.respaw ();
 
 		}

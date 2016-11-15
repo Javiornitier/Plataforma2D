@@ -3,6 +3,8 @@ using System.Collections;
 
 public class CheckPoint : MonoBehaviour {
 	private GameControlScript gcs;
+	public Sprite banderaActivada;
+	private bool activada = false;
 
 
 	// Use this for initialization
@@ -10,9 +12,11 @@ public class CheckPoint : MonoBehaviour {
 		gcs = GameObject.Find ("GameControl").GetComponent<GameControlScript> ();
 	}
 	
-void OnTriggerEnter2D(Collider2D objeto){
-	if(objeto.tag == "Player"){
-		gcs.checkpoint (transform.position);
-	}
+	void OnTriggerEnter2D(Collider2D objeto){
+		if(objeto.tag == "Player" && !activada){
+			GetComponent<SpriteRenderer> ().sprite = banderaActivada;
+			gcs.checkpoint (transform.position);
+			activada = true;
+		}
 	}
 }
