@@ -8,12 +8,14 @@ public class Player1_Controles : MonoBehaviour {
 	public float velocidad = 100f;
 	//public float velocidad_maxima = 5f; LO COMENTADO ES PARA USAR ACELERACIÓN HASTA UNA VELOCIDAD MAXIMA Y NO UNA VELOCIDAD CONSTANTE DESDE INICIO
 	private Rigidbody2D rb;
+	private GameControlScript gcs;
 
 
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
 		rb = GetComponent<Rigidbody2D> ();
+		gcs = GameObject.Find ("GameControl").GetComponent<GameControlScript>();
 	}
 	
 	// Update is called once per frame
@@ -76,8 +78,17 @@ public class Player1_Controles : MonoBehaviour {
 	}
 
 	void OnTriggerExit2D(Collider2D objeto){
-		if(objeto.tag == "Apoyo") {
+		if (objeto.tag == "Apoyo") {
 			suelo_cerca = false;
 		}
 	}
+	void OnCollisionEnter2D(Collision2D col){
+		if (col.gameObject.tag == "Muerte") {
+			gcs.esta_vivo = false;
+			Destroy(gameObject);
+			gcs.respaw ();
+
+		}
 	}
+	
+}
