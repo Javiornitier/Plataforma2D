@@ -9,6 +9,7 @@ public class Player1_Controles : MonoBehaviour {
 	//public float velocidad_maxima = 5f; LO COMENTADO ES PARA USAR ACELERACIÓN HASTA UNA VELOCIDAD MAXIMA Y NO UNA VELOCIDAD CONSTANTE DESDE INICIO
 	private Rigidbody2D rb;
 	private GameControlScript gcs;
+	public GameObject particulasMuerte;
 
 
 	// Use this for initialization
@@ -84,7 +85,9 @@ public class Player1_Controles : MonoBehaviour {
 	}
 	void OnCollisionEnter2D(Collision2D col){
 		if (col.gameObject.tag == "Muerte") {
-			gcs.respaw ();
+			//gcs.respaw (); //(REAPARECER)
+			Instantiate(particulasMuerte, transform.position, transform.rotation);
+
 
 		}
 	}
