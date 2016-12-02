@@ -11,7 +11,7 @@ public class GameControlScript : MonoBehaviour {
 		punto_inicio = player.transform.position;
 	}
 
-	public void respaw(){
+	public void respawn(){
 		player.transform.position = punto_inicio;
 	}
 

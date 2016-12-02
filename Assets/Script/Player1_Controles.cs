@@ -5,16 +5,21 @@ public class Player1_Controles : MonoBehaviour {
 
 	private Animator anim;
 	bool suelo_cerca = false;
+	public AudioClip sonidoSalto;
+	public AudioClip sonidoHerir;
+	public AudioClip sonidoMoneda;
 	public float velocidad = 100f;
 	//public float velocidad_maxima = 5f; LO COMENTADO ES PARA USAR ACELERACIÓN HASTA UNA VELOCIDAD MAXIMA Y NO UNA VELOCIDAD CONSTANTE DESDE INICIO
 	private Rigidbody2D rb;
 	private GameControlScript gcs;
 	public GameObject particulasMuerte;
+	private AudioSource audio;
 
 
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent<Animator> ();
+		audio = GetComponent<AudioSource> ();
 		rb = GetComponent<Rigidbody2D> ();
 		gcs = GameObject.Find ("GameControl").GetComponent<GameControlScript>();
 	}
@@ -47,10 +52,12 @@ public class Player1_Controles : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.UpArrow) && suelo_cerca) {
 			Salto ();
 			anim.SetBool ("jump", true);
+			audio.PlayOneShot (sonidoSalto, 0.5f);
 		}
 
 		if (Input.GetKeyUp (KeyCode.UpArrow)) {
 			anim.SetBool ("jump", false);
+			audio.PlayOneShot (sonidoSalto);
 		}
 	}
 
@@ -85,11 +92,18 @@ public class Player1_Controles : MonoBehaviour {
 	}
 	void OnCollisionEnter2D(Collision2D col){
 		if (col.gameObject.tag == "Muerte") {
+			Invoke ("muerte", 1);
+			audio.PlayOneShot (sonidoHerir);
 			//gcs.respaw (); //(REAPARECER)
-			Instantiate(particulasMuerte, transform.position, transform.rotation);
-
-
+			Instantiate (particulasMuerte, transform.position, transform.rotation);
+		}
+		if (col.gameObject.tag == "Moneda") {
+			audio.PlayOneShot (sonidoMoneda);
 		}
 	}
-	
+	void muerte (){
+		gcs.respawn ();
+	}
+
 }
+		
